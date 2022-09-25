@@ -8,7 +8,7 @@ def find_cell(sheet , max_row , max_col , heading):
             
 def process_files(files):
     for file in files:
-        result = {"MPR" : [0 , 0] , "QPR" : [0 , 0]}
+        result = {"A" : [0 , 0] , "I" : [0 , 0] , "OTH_MONTHLY" : [0 , 0]  , "QPR" : [0 , 0]}
         sheet = xl.load_workbook(file).active
         max_row , max_col = sheet.max_row , sheet.max_column
         mru_row , mru_col = find_cell(sheet , max_row , max_col , "Billing Portion")
