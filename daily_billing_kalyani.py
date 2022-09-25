@@ -27,11 +27,26 @@ def process_files(files):
                 result[mru.strip()[-3:]][1] += inv
                 
         print(sheet , result)
-        
+
+def mru_wise_class_creation(files):
+    mru_class = {}
+    sheet = xl.load_workbook(files).active
+    max_row , max_col = sheet.max_row , sheet.max_column
+
+    for i in range(1 , max_row + 1):
+        mru = sheet.cell(row = i , column = 1).value
+        base_class = sheet.cell(row = i , column = 2).value
+        mru_class.setdefault(base_class , [])
+        mru_class[base_class].append(mru)
+
+    return mru_class
+
 def main():
     print("Hello . Rename CCC wise excels as 103.xlsx , 201.xlsx etc.")
     bill_files = ['103.xlsx' , '201.xlsx' , '202.xlsx' , '208.xlsx' , '300.xlsx' , '301.xlsx' , '401.xlsx' , '402.xlsx']
     mru_files = 'mru_wise_class.xlsx'
+
+    mru_class = mru_wise_class_creation(mru_files)
     process_files(bill_files)
     
 if __name__ == '__main__':
