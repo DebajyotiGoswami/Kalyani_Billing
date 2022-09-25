@@ -30,8 +30,7 @@ def process_files(files):
         
 def main():
     print("Hello . Rename CCC wise excels as 103.xlsx , 201.xlsx etc.")
-    bill_files = ['103.xlsx' , '201.xlsx' , '202.xlsx' , '208.xlsx' , \
-             '300.xlsx' , '301.xlsx' , '401.xlsx' , '402.xlsx']
+    bill_files = ['103.xlsx' , '201.xlsx' , '202.xlsx' , '208.xlsx' , '300.xlsx' , '301.xlsx' , '401.xlsx' , '402.xlsx']
     mru_files = 'mru_wise_class.xlsx'
     process_files(bill_files)
     
