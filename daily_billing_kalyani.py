@@ -7,7 +7,7 @@ def find_cell(sheet , max_row , max_col , heading):
                 return i , j
             
 def process_files(files):
-    result = {monthly : [0 , 0] , quarterly : [0 , 0]}
+    result = {"MPR" : [0 , 0] , "QPR" : [0 , 0]}
 
     for file in files:
         sheet = xl.load_workbook(file).active
@@ -21,6 +21,7 @@ def process_files(files):
                 mru = sheet.cell(row = i , column = mru_col)
                 con = sheet.cell(row = i , column = con_col)
                 inv = sheet.cell(row = i , column = inv_col)
+
                 
         print(sheet , mru_col , con_col , inv_col)
         
