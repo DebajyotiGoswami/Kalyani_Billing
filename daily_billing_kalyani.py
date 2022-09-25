@@ -18,15 +18,28 @@ def process_files(files , mru_class):
 
         for i in range(1 , max_row + 1):
             mru = sheet.cell(row = i , column = mru_col).value
-            if mru is not None and mru.strip()[-3:] in ('QPR' , 'MPR'):
+            if mru is not None:
                 con = sheet.cell(row = i , column = con_col).value
                 inv = sheet.cell(row = i , column = inv_col).value
                 if con is None : con = 0   #where con count value is blank , consider it as ZERO
                 if inv is None : inv = 0   #where invoice count value is blank , consider it as ZERO
-                result[mru.strip()[-3:]][0] += con
-                result[mru.strip()[-3:]][1] += inv
+
+                if mru.strip()[-3 : ] == 'MPR':
+                    if mru.strip() in mru_class['I'] or mru.strip() in mru_class['S']:
+                        result['A'][0] += con
+                        result['A'][1] += inv
+                    elif mru.strip() in mru_class['A']:
+                        result['I'][0] += con
+                        result['I'][1] += inv
+                    else:
+                        result['OTH_MONTHLY'][0] += con
+                        result['OTH_MONTHLY'][1] += inv
+                elif mru.strip()[-3 : ] == 'QPR':
+                    result[mru.strip()[-3:]][0] += con
+                    result[mru.strip()[-3:]][1] += inv
+                    
                 
-        print(sheet , result)
+        print(result)
 
 def mru_wise_class_creation(files):
     mru_class = {}
