@@ -7,6 +7,8 @@ def find_cell(sheet , max_row , max_col , heading):
                 return i , j
             
 def process_files(files):
+    result = {monthly : [0 , 0] , quarterly : [0 , 0]}
+
     for file in files:
         sheet = xl.load_workbook(file).active
         max_row , max_col = sheet.max_row , sheet.max_column
