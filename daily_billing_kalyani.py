@@ -7,23 +7,25 @@ def find_cell(sheet , max_row , max_col , heading):
                 return i , j
             
 def process_files(files):
-    result = {"MPR" : [0 , 0] , "QPR" : [0 , 0]}
-
     for file in files:
+        result = {"MPR" : [0 , 0] , "QPR" : [0 , 0]}
         sheet = xl.load_workbook(file).active
         max_row , max_col = sheet.max_row , sheet.max_column
         mru_row , mru_col = find_cell(sheet , max_row , max_col , "Billing Portion")
         con_row , con_col = find_cell(sheet , max_row , max_col , "Live & Temp Disc Con")
         inv_row , inv_col = find_cell(sheet , max_row , max_col , "Invoice Generated")
 
-        for i in range(1 , max_row):
-            if sheet.cell(row = i , column = mru_col) is not None:
-                mru = sheet.cell(row = i , column = mru_col)
-                con = sheet.cell(row = i , column = con_col)
-                inv = sheet.cell(row = i , column = inv_col)
-
+        for i in range(1 , max_row + 1):
+            if sheet.cell(row = i , column = mru_col).value is not None and sheet.cell(row = i , column = mru_col).value.strip()[-3:] in ('QPR' , 'MPR'):
+                mru = sheet.cell(row = i , column = mru_col).value.strip()
+                con = sheet.cell(row = i , column = con_col).value
+                inv = sheet.cell(row = i , column = inv_col).value
+                if con is None : con = 0   #where con count value is blank , consider it as ZERO
+                if inv is None : inv = 0   #where invoice count value is blank , consider it as ZERO
+                result[mru.strip()[-3:]][0] += con
+                result[mru.strip()[-3:]][1] += inv
                 
-        print(sheet , mru_col , con_col , inv_col)
+        print(sheet , result)
         
 def main():
     print("Hello . Rename CCC wise excels as 103.xlsx , 201.xlsx etc.")
