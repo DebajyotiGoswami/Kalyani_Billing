@@ -6,7 +6,7 @@ def find_cell(sheet , max_row , max_col , heading):
             if sheet.cell(row = i , column = j).value == heading:
                 return i , j
             
-def process_files(files):
+def process_files(files , mru_class):
     for file in files:
         #result = {"MPR" : [0 , 0]  , "QPR" : [0 , 0]}
         result = {"A" : [0 , 0] , "I" : [0 , 0] , "OTH_MONTHLY" : [0 , 0]  , "QPR" : [0 , 0]}
@@ -47,7 +47,7 @@ def main():
     mru_files = 'mru_wise_class.xlsx'
 
     mru_class = mru_wise_class_creation(mru_files)
-    process_files(bill_files)
+    process_files(bill_files , mru_class)
     
 if __name__ == '__main__':
     main()
